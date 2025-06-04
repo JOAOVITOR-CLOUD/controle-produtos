@@ -3,35 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Controle de Produto</title>
 </head>
 <body>
     
+    <h1>Controle de Produtos</h1>
+
+    <div>
+        <input type="text" id="descricao">
+        <input type="text" id="preco">
+        <button onclick="addProduto()">Cadastrar Produto</button>
+    </div>
+    <hr>
     <table border="1">
         <tr>
             <th>Código</th>
-            <th>Descrição do produto</th>
-            <th>Valor produto</th>
+            <th>Descrição do Produto</th>
+            <th>Valor Produto</th>
         </tr>
+        <tbody id="produtos"></tbody>
     </table>
+
     <script>
+
+        let descricaoProduto = document.getElementById('descricao')
+        let precoProduto = document.getElementById('preco')
+
         let linha = ''
-        let produtos = [
-            {codigo: 1, decricao: ' Feijão Carioca 1Kg', preco: 4.99 },
-            {codigo: 2, descricao: ' Sardinha 88 150g', preco: 6.99  },
+        let produtos = []
+
+        function addProduto() {
+            produtos.push({
+                codigo: produtos.length + 1,
+                descricao: descricaoProduto.value,
+                preco: Number(precoProduto.value)
+            })
+
+            linha = ''
+            
+            produtos.forEach(p => linha += `
+                <tr>
+                    <td>${p.codigo}</td>
+                    <td>${p.descricao}</td>
+                    <td>R$ ${p.preco.toFixed(2)}</td>
+                </tr>
+            `)
+
+            document.getElementById('produtos').innerHTML = linha
+
+            descricaoProduto.value = ''
+            precoProduto.value = ''
+            descricaoProduto.focus()
+        }
+
         
-        ]
 
-        produtos.push({codigo: 3, descricao: 'Pacote de Macarrão Estrela', preco: 2.59 })
-
-        produtos.forEach(produto => linha += `
-        <tr>
-            <td>${produto.codigo} </td>
-            <td>${produto.descricao}</td>
-            <td>R$ ${produto.preco.toFixed(2)}</td>
-            <tr>
-        `)
-document.getElementById('produtos').innerHTML = linha 
     </script>
+    
 </body>
 </html>
