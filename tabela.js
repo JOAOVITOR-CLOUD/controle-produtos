@@ -1,5 +1,6 @@
- let descricaoProduto = document.getElementById('descricao')
+let descricaoProduto = document.getElementById('descricao')
 let precoProduto = document.getElementById('preco')
+let btnSalvar = document.getElementById('btnSalvar')
 
 let linha = ''
 let produtos = []
@@ -14,8 +15,8 @@ function renderizarTabela() {
             <td>${p.descricao}</td>
             <td>R$ ${p.preco.toFixed(2)}</td>
             <td>
-                <button onclick="editarProduto(${index})">Editar</button>
-                <button onclick="removerProduto(${index})">Remover</button>
+                <button onclick="editarProduto(${index})" class="btn btn-md bg-warning">Editar</button>
+                <button onclick="removerProduto(${index})" class="btn btn-md bg-danger text-light">Remover</button>
             </td>
         </tr>
     `)
@@ -42,16 +43,16 @@ function editarProduto(index) {
     descricaoProduto.value = produto.descricao
     precoProduto.value = produto.preco
     indexEditado = index
-    btnSalvar.innerText = 'Editar produto'
+    btnSalvar.innerText = 'Editar Produto'
     btnSalvar.onclick = atualizarProduto
-}    
+}
 
-function atualizarProduto(){
+function atualizarProduto() {
     produtos[indexEditado].descricao = descricaoProduto.value
     produtos[indexEditado].preco = Number(precoProduto.value)
 
     renderizarTabela()
-
+    
     descricaoProduto.value = ''
     precoProduto.value = ''
     descricaoProduto.focus()
@@ -61,5 +62,6 @@ function atualizarProduto(){
 
 function removerProduto(index) {
     const produto = produtos[index]
-    alert(`Produto selecionado: ${produto.descricao}`)
+    produtos.splice(index, 1)
+    renderizarTabela()
 }
